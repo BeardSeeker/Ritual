@@ -31,6 +31,9 @@
     --frost: #8FD3D9;
     --frost-deep: #5FB3BC;
     --frost-glow: rgba(143, 211, 217, 0.4);
+    --violet: #B7A6E8;
+    --violet-deep: #9781D6;
+    --violet-glow: rgba(183, 166, 232, 0.4);
     --danger: #C97B8A;
     --radius: 20px;
   }
@@ -64,7 +67,7 @@
 
   /* ---------- Tabs ---------- */
   .tabs {
-    display: flex; gap: 6px;
+    display: flex; gap: 5px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -72,21 +75,24 @@
     margin: 16px 0 14px;
   }
   .tab {
-    flex: 1; padding: 11px 8px; border: none; border-radius: 12px;
+    flex: 1; padding: 11px 4px; border: none; border-radius: 12px;
     background: transparent; color: var(--muted);
-    font-family: inherit; font-size: 14.5px; font-weight: 700;
+    font-family: inherit; font-size: 13.5px; font-weight: 700;
     cursor: pointer; transition: all .2s ease;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    white-space: nowrap;
   }
   .tab .tab-count {
-    font-size: 11.5px; font-weight: 700;
+    font-size: 11px; font-weight: 700;
     background: var(--surface-hi); color: var(--muted);
-    border-radius: 8px; padding: 1px 7px;
+    border-radius: 8px; padding: 1px 6px;
   }
   .tab.active-build { background: linear-gradient(180deg, rgba(233,184,114,0.16), rgba(233,184,114,0.06)); color: var(--ember); }
   .tab.active-build .tab-count { background: rgba(233,184,114,0.18); color: var(--ember); }
   .tab.active-unlearn { background: linear-gradient(180deg, rgba(143,211,217,0.14), rgba(143,211,217,0.05)); color: var(--frost); }
   .tab.active-unlearn .tab-count { background: rgba(143,211,217,0.16); color: var(--frost); }
+  .tab.active-notes { background: linear-gradient(180deg, rgba(183,166,232,0.15), rgba(183,166,232,0.05)); color: var(--violet); }
+  .tab.active-notes .tab-count { background: rgba(183,166,232,0.16); color: var(--violet); }
 
   /* ---------- Summary ---------- */
   .summary { display: flex; align-items: center; gap: 14px; padding: 2px 6px 14px; }
@@ -180,16 +186,52 @@
   }
   .menu-btn:active { color: var(--text); }
 
+  /* ---------- Notes ---------- */
+  .note-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--violet);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color .2s ease, transform .12s ease;
+  }
+  .note-card:active { transform: scale(0.99); }
+  .note-text {
+    font-size: 15px; line-height: 1.5;
+    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .note-date {
+    margin-top: 10px;
+    font-size: 12px; color: var(--muted-dim); font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 180px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    color: var(--text);
+    font-family: inherit; font-size: 16px; line-height: 1.55;
+    padding: 14px 16px; outline: none; resize: vertical;
+    transition: border-color .2s ease;
+  }
+  textarea:focus { border-color: var(--violet); }
+
   /* ---------- Empty state ---------- */
   .empty { text-align: center; padding: 44px 24px; color: var(--muted); }
   .empty .mark { font-size: 40px; opacity: 0.5; margin-bottom: 12px; }
   .empty p { margin: 0; line-height: 1.5; font-size: 15px; }
 
   /* ---------- Footer utilities ---------- */
-  .util-row {
-    display: flex; justify-content: center; gap: 22px;
-    margin-top: 26px;
-  }
+  .util-row { display: flex; justify-content: center; gap: 22px; margin-top: 26px; }
   .util-btn {
     background: none; border: none; color: var(--muted-dim);
     font-family: inherit; font-size: 13px; font-weight: 600;
@@ -214,6 +256,11 @@
     background: linear-gradient(180deg, var(--frost) 0%, var(--frost-deep) 100%);
     color: #0C2426;
     box-shadow: 0 10px 30px -6px var(--frost-glow), 0 2px 0 rgba(255,255,255,0.15) inset;
+  }
+  .fab.violet {
+    background: linear-gradient(180deg, var(--violet) 0%, var(--violet-deep) 100%);
+    color: #1E1533;
+    box-shadow: 0 10px 30px -6px var(--violet-glow), 0 2px 0 rgba(255,255,255,0.15) inset;
   }
   .fab:active { transform: translateX(-50%) scale(0.96); }
 
@@ -321,6 +368,7 @@
   .btn:active { transform: scale(0.97); }
   .btn-primary { background: linear-gradient(180deg, var(--ember), var(--ember-deep)); color: #2A1E0C; }
   .btn-primary.frost { background: linear-gradient(180deg, var(--frost), var(--frost-deep)); color: #0C2426; }
+  .btn-primary.violet { background: linear-gradient(180deg, var(--violet), var(--violet-deep)); color: #1E1533; }
   .btn-primary:disabled { opacity: 0.4; }
   .btn-ghost { background: var(--surface-2); color: var(--text); }
   .btn-danger { background: none; color: var(--danger); border: 1px solid rgba(201,123,138,0.3); }
@@ -337,6 +385,7 @@
   <div class="tabs">
     <button class="tab" id="tabBuild">🔥 Build <span class="tab-count" id="countBuild">0</span></button>
     <button class="tab" id="tabUnlearn">❄️ Unlearn <span class="tab-count" id="countUnlearn">0</span></button>
+    <button class="tab" id="tabNotes">📝 Notes <span class="tab-count" id="countNotes">0</span></button>
   </div>
 
   <div class="summary" id="summary" style="display:none;">
@@ -366,7 +415,7 @@
 
   <button class="fab" id="fab">＋ New ritual</button>
 
-  <!-- Add / edit sheet -->
+  <!-- Habit add/edit sheet -->
   <div class="scrim" id="scrim"></div>
   <div class="sheet" id="sheet">
     <div class="grabber"></div>
@@ -415,6 +464,19 @@
     <button class="btn btn-danger" id="deleteBtn" style="display:none; width:100%; margin-top:10px;">Delete habit</button>
   </div>
 
+  <!-- Note add/edit sheet -->
+  <div class="sheet" id="noteSheet">
+    <div class="grabber"></div>
+    <h2 id="noteSheetTitle">New note</h2>
+    <div class="field-label">What did you notice?</div>
+    <textarea id="noteInput" placeholder="Triggers, what worked, what didn’t, ideas to try…"></textarea>
+    <div class="sheet-actions">
+      <button class="btn btn-ghost" id="noteCancelBtn">Cancel</button>
+      <button class="btn btn-primary violet" id="noteSaveBtn">Save</button>
+    </div>
+    <button class="btn btn-danger" id="noteDeleteBtn" style="display:none; width:100%; margin-top:10px;">Delete note</button>
+  </div>
+
 <script>
 (function () {
   "use strict";
@@ -425,12 +487,15 @@
       var k = "__ritual_test__";
       localStorage.setItem(k, "1"); localStorage.removeItem(k);
       return {
-        load: function () { return localStorage.getItem("ritual.habits"); },
-        save: function (v) { localStorage.setItem("ritual.habits", v); }
+        get: function (key) { return localStorage.getItem(key); },
+        set: function (key, v) { localStorage.setItem(key, v); }
       };
     } catch (e) {
-      var mem = null;
-      return { load: function () { return mem; }, save: function (v) { mem = v; } };
+      var mem = {};
+      return {
+        get: function (key) { return mem[key] || null; },
+        set: function (key, v) { mem[key] = v; }
+      };
     }
   })();
 
@@ -440,11 +505,9 @@
   function pad(n) { return String(n).padStart(2, "0"); }
   function dateKey(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
   function keyFor(offset) { var d = new Date(); d.setDate(d.getDate() + offset); return dateKey(d); }
-
-  // Monday-of-week date for a given date (week id)
   function mondayOf(d) {
     var x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    var day = (x.getDay() + 6) % 7; // Mon=0 … Sun=6
+    var day = (x.getDay() + 6) % 7;
     x.setDate(x.getDate() - day);
     return x;
   }
@@ -466,18 +529,25 @@
 
   /* ---------- state ---------- */
   var habits = [];
-  try { var raw = store.load(); if (raw) habits = JSON.parse(raw); } catch (e) { habits = []; }
+  var notes = [];
+  try { var raw = store.get("ritual.habits"); if (raw) habits = JSON.parse(raw); } catch (e) { habits = []; }
+  try { var rawN = store.get("ritual.notes"); if (rawN) notes = JSON.parse(rawN); } catch (e) { notes = []; }
 
-  // migrate v1 data
-  habits.forEach(function (h) {
-    if (!h.type) h.type = "build";
-    if (!h.freq) h.freq = { period: "daily", target: 1 };
-    if (!h.done) h.done = {};
-  });
+  function migrateHabits(list) {
+    list.forEach(function (h) {
+      if (!h.type) h.type = "build";
+      if (!h.freq) h.freq = { period: "daily", target: 1 };
+      if (!h.done) h.done = {};
+    });
+  }
+  migrateHabits(habits);
 
   var activeTab = "build";
 
-  function persist() { store.save(JSON.stringify(habits)); }
+  function persist() {
+    store.set("ritual.habits", JSON.stringify(habits));
+    store.set("ritual.notes", JSON.stringify(notes));
+  }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
   /* ---------- streaks ---------- */
@@ -489,7 +559,6 @@
   function weeklyStreak(h) {
     var streak = 0;
     var wk = mondayOf(new Date());
-    // current week counts only if already met; if not met, don't break — start from last week
     if (countInWeek(h.done, wk) >= h.freq.target) streak++;
     while (true) {
       wk = new Date(wk); wk.setDate(wk.getDate() - 7);
@@ -520,12 +589,8 @@
     return !!h.done[keyFor(0)];
   }
   function periodProgressText(h) {
-    if (h.freq.period === "weekly") {
-      return countInWeek(h.done, mondayOf(new Date())) + "/" + h.freq.target + " this week";
-    }
-    if (h.freq.period === "monthly") {
-      return countInMonth(h.done, monthKey(new Date())) + "/" + h.freq.target + " this month";
-    }
+    if (h.freq.period === "weekly") return countInWeek(h.done, mondayOf(new Date())) + "/" + h.freq.target + " this week";
+    if (h.freq.period === "monthly") return countInMonth(h.done, monthKey(new Date())) + "/" + h.freq.target + " this month";
     return "";
   }
   function streakUnit(h) {
@@ -546,6 +611,7 @@
   var progCount = document.getElementById("progCount");
   var tabBuild = document.getElementById("tabBuild");
   var tabUnlearn = document.getElementById("tabUnlearn");
+  var tabNotes = document.getElementById("tabNotes");
   var fab = document.getElementById("fab");
   var ARC_LEN = 138.2;
 
@@ -554,14 +620,15 @@
   }
 
   function renderTabs() {
-    var b = habits.filter(function (h) { return h.type === "build"; }).length;
-    var u = habits.filter(function (h) { return h.type === "unlearn"; }).length;
-    document.getElementById("countBuild").textContent = b;
-    document.getElementById("countUnlearn").textContent = u;
+    document.getElementById("countBuild").textContent = habits.filter(function (h) { return h.type === "build"; }).length;
+    document.getElementById("countUnlearn").textContent = habits.filter(function (h) { return h.type === "unlearn"; }).length;
+    document.getElementById("countNotes").textContent = notes.length;
     tabBuild.className = "tab" + (activeTab === "build" ? " active-build" : "");
     tabUnlearn.className = "tab" + (activeTab === "unlearn" ? " active-unlearn" : "");
+    tabNotes.className = "tab" + (activeTab === "notes" ? " active-notes" : "");
     fab.classList.toggle("frost", activeTab === "unlearn");
-    fab.textContent = activeTab === "build" ? "＋ New ritual" : "＋ New release";
+    fab.classList.toggle("violet", activeTab === "notes");
+    fab.textContent = activeTab === "build" ? "＋ New ritual" : activeTab === "unlearn" ? "＋ New release" : "＋ New note";
   }
 
   function visibleHabits() {
@@ -569,6 +636,7 @@
   }
 
   function renderSummary() {
+    if (activeTab === "notes") { summaryEl.style.display = "none"; return; }
     var vis = visibleHabits();
     if (!vis.length) { summaryEl.style.display = "none"; return; }
     summaryEl.style.display = "flex";
@@ -589,8 +657,39 @@
     }
   }
 
+  function fmtNoteDate(ts) {
+    var d = new Date(ts);
+    return d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) +
+      " · " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  }
+
   function renderList() {
     listEl.innerHTML = "";
+
+    if (activeTab === "notes") {
+      if (!notes.length) {
+        emptyEl.style.display = "block";
+        emptyText.innerHTML = "No notes yet.<br/>Capture triggers, wins, and ideas —<br/>anything that helps the habits stick.";
+        return;
+      }
+      emptyEl.style.display = "none";
+      notes.slice().sort(function (a, b) { return b.updated - a.updated; }).forEach(function (n) {
+        var li = document.createElement("li");
+        li.className = "note-card";
+        var txt = document.createElement("div");
+        txt.className = "note-text";
+        txt.textContent = n.text;
+        li.appendChild(txt);
+        var dt = document.createElement("div");
+        dt.className = "note-date";
+        dt.textContent = fmtNoteDate(n.updated);
+        li.appendChild(dt);
+        li.addEventListener("click", function () { openNoteSheet(n.id); });
+        listEl.appendChild(li);
+      });
+      return;
+    }
+
     var vis = visibleHabits();
     if (!vis.length) {
       emptyEl.style.display = "block";
@@ -671,8 +770,9 @@
 
   tabBuild.addEventListener("click", function () { activeTab = "build"; renderAll(); });
   tabUnlearn.addEventListener("click", function () { activeTab = "unlearn"; renderAll(); });
+  tabNotes.addEventListener("click", function () { activeTab = "notes"; renderAll(); });
 
-  /* ---------- sheet ---------- */
+  /* ---------- habit sheet ---------- */
   var scrim = document.getElementById("scrim");
   var sheet = document.getElementById("sheet");
   var sheetTitle = document.getElementById("sheetTitle");
@@ -759,15 +859,14 @@
       nameInput.value = h.name;
       chosenType = h.type;
       chosenPeriod = h.freq.period;
-      chosenTarget = h.freq.target > 1 ? h.freq.target : 3;
-      if (h.freq.period !== "daily") chosenTarget = h.freq.target;
+      chosenTarget = h.freq.period !== "daily" ? h.freq.target : 3;
       timeInput.value = h.reminder || "";
       selectEmoji(h.emoji || EMOJIS[0]);
       deleteBtn.style.display = "block";
     } else {
-      sheetTitle.textContent = activeTab === "build" ? "New ritual" : "New release";
+      sheetTitle.textContent = activeTab === "unlearn" ? "New release" : "New ritual";
       nameInput.value = "";
-      chosenType = activeTab;
+      chosenType = activeTab === "unlearn" ? "unlearn" : "build";
       chosenPeriod = "daily";
       chosenTarget = 3;
       timeInput.value = "";
@@ -819,8 +918,73 @@
   });
 
   document.getElementById("cancelBtn").addEventListener("click", closeSheet);
-  scrim.addEventListener("click", closeSheet);
-  fab.addEventListener("click", function () { openSheet(null); });
+
+  /* ---------- note sheet ---------- */
+  var noteSheet = document.getElementById("noteSheet");
+  var noteSheetTitle = document.getElementById("noteSheetTitle");
+  var noteInput = document.getElementById("noteInput");
+  var noteSaveBtn = document.getElementById("noteSaveBtn");
+  var noteDeleteBtn = document.getElementById("noteDeleteBtn");
+  var editingNoteId = null;
+
+  function openNoteSheet(id) {
+    editingNoteId = id || null;
+    if (editingNoteId) {
+      var n = notes.find(function (x) { return x.id === editingNoteId; });
+      noteSheetTitle.textContent = "Edit note";
+      noteInput.value = n.text;
+      noteDeleteBtn.style.display = "block";
+    } else {
+      noteSheetTitle.textContent = "New note";
+      noteInput.value = "";
+      noteDeleteBtn.style.display = "none";
+    }
+    validateNote();
+    scrim.classList.add("open");
+    noteSheet.classList.add("open");
+    setTimeout(function () { noteInput.focus(); }, 300);
+  }
+
+  function closeNoteSheet() {
+    scrim.classList.remove("open");
+    noteSheet.classList.remove("open");
+    noteInput.blur();
+  }
+
+  function validateNote() { noteSaveBtn.disabled = noteInput.value.trim().length === 0; }
+  noteInput.addEventListener("input", validateNote);
+
+  noteSaveBtn.addEventListener("click", function () {
+    var text = noteInput.value.trim();
+    if (!text) return;
+    var now = Date.now();
+    if (editingNoteId) {
+      var n = notes.find(function (x) { return x.id === editingNoteId; });
+      n.text = text; n.updated = now;
+    } else {
+      notes.push({ id: uid(), text: text, created: now, updated: now });
+    }
+    persist();
+    renderAll();
+    closeNoteSheet();
+  });
+
+  noteDeleteBtn.addEventListener("click", function () {
+    if (!editingNoteId) return;
+    notes = notes.filter(function (x) { return x.id !== editingNoteId; });
+    persist();
+    renderAll();
+    closeNoteSheet();
+  });
+
+  document.getElementById("noteCancelBtn").addEventListener("click", closeNoteSheet);
+
+  scrim.addEventListener("click", function () { closeSheet(); closeNoteSheet(); });
+
+  fab.addEventListener("click", function () {
+    if (activeTab === "notes") openNoteSheet(null);
+    else openSheet(null);
+  });
 
   /* ---------- calendar reminder (.ics) ---------- */
   function downloadFile(name, content, mime) {
@@ -865,7 +1029,8 @@
 
   /* ---------- backup / restore ---------- */
   document.getElementById("exportBtn").addEventListener("click", function () {
-    downloadFile("ritual-backup-" + keyFor(0) + ".json", JSON.stringify(habits, null, 2), "application/json");
+    var payload = { version: 3, habits: habits, notes: notes };
+    downloadFile("ritual-backup-" + keyFor(0) + ".json", JSON.stringify(payload, null, 2), "application/json");
   });
 
   var importFile = document.getElementById("importFile");
@@ -877,14 +1042,14 @@
     r.onload = function () {
       try {
         var data = JSON.parse(r.result);
-        if (!Array.isArray(data)) throw new Error("bad format");
-        if (!confirm("Replace current data with this backup (" + data.length + " habits)?")) return;
-        habits = data;
-        habits.forEach(function (h) {
-          if (!h.type) h.type = "build";
-          if (!h.freq) h.freq = { period: "daily", target: 1 };
-          if (!h.done) h.done = {};
-        });
+        var newHabits, newNotes;
+        if (Array.isArray(data)) { newHabits = data; newNotes = notes; } // old backup format
+        else if (data && Array.isArray(data.habits)) { newHabits = data.habits; newNotes = Array.isArray(data.notes) ? data.notes : []; }
+        else throw new Error("bad format");
+        if (!confirm("Replace current data with this backup (" + newHabits.length + " habits, " + newNotes.length + " notes)?")) { importFile.value = ""; return; }
+        habits = newHabits;
+        notes = newNotes;
+        migrateHabits(habits);
         persist();
         renderAll();
       } catch (e) {
